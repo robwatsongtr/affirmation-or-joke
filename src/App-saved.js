@@ -1,11 +1,12 @@
 
+
 import React from 'react';
 import './App.css';
 
-function NewJokeAffirmation(props) {
+function NewQuoteButton(props) {
   return (
     <button type="button" className="button-box" onClick={props.onClick}>
-        Click here for a new affirmation or joke 
+        Click here for a new quote or joke 
     </button>
   );
 }
@@ -19,7 +20,7 @@ class App extends React.Component {
     };
     this.handleClick = this.handleClick.bind(this);
     this.fetchJoke = this.fetchJoke.bind(this);
-    this.fetchAffirmation = this.fetchAffirmation.bind(this);
+    this.fetchQuote = this.fetchQuote.bind(this);
   }
 
   // When properties or state changes, return true only 
@@ -35,29 +36,17 @@ class App extends React.Component {
         "Accept": "application/json"
       }
     })
-    .then(result => result.json())
-    .then(
-      (data) => {
-        this.setState( {text: data.joke, isJoke: false, isBusy: false} )
-      }
-    )
-    .catch(console.log)
+      .then(result => result.json())
+      .then(
+        (data) => {
+          this.setState( {text: data.joke, isJoke: false, isBusy: false} )
+        }
+      )
+      .catch(console.log)
   }
 
-  fetchAffirmation() {
-    this.setState({isBusy:true})
-    fetch('https://dulce-affirmations-api.herokuapp.com/affirmation', {
-      headers: {
-        "Accept": "application/json"
-      }
-    })
-    .then(result => result.json())
-    .then(
-      (data) => {
-        this.setState( {text: data[0].phrase , isJoke: true, isBusy: false} )
-      }
-    )
-    .catch(console.log)
+  fetchQuote() {
+    this.setState( {text: "Here is a famous quote.", isJoke: true} )
   }
 
   handleClick() {
@@ -69,20 +58,20 @@ class App extends React.Component {
     if(isJoke) {
       this.fetchJoke()
     } else
-      this.fetchAffirmation()
+      this.fetchQuote()
   }
 
   render() {
     return (
     <div className="App">
       <header>
-        <p>Affirmation or Joke</p>    
+        <p>Quote or Joke?</p>    
       </header>
         <div className="text-box">
           {this.state.text}
         </div>
           <br></br>
-        <NewJokeAffirmation onClick={this.handleClick} />
+        <NewQuoteButton onClick={this.handleClick} />
           <br></br>
       <footer>
         Rob Watson 2020 
