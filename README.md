@@ -1,3 +1,6 @@
+This cute little demonstrator has a clean and simple interface that simply mashes up a random Dad joke with a random new age affirmation. 
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
