@@ -1,4 +1,5 @@
-This cute little demonstrator has a clean and simple interface that simply mashes up a random Dad joke with a random new age affirmation. 
+This cute little demonstrator has a clean and simple interface that simply mashes up a random Dad joke with a random new age affirmation 
+by calling their respective APIs and toggling between them. Often funny and oddball juxtapositions occur.
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
