@@ -5,7 +5,7 @@ import './App.css';
 function NewJokeAffirmation(props) {
   return (
     <button type="button" className="button-box" onClick={props.onClick}>
-        Click here for a new affirmation or joke 
+        Click here for a new affirmation or dad joke 
     </button>
   );
 }
@@ -22,10 +22,22 @@ class App extends React.Component {
     this.fetchAffirmation = this.fetchAffirmation.bind(this);
   }
 
-  // When properties or state changes, return true only 
-  // if it's the text that has changed.
-  shouldComponentUpdate(nextprops, nextstate) {        
-    return (nextstate.text !== this.state.text);    
+  // On launch, app will display an affirmation from the API:
+  componentDidMount() {
+    fetch('https://dulce-affirmations-api.herokuapp.com/affirmation', {
+      headers: {
+        "Accept": "application/json"
+      }
+    })
+    .then(result => result.json())
+    .then( (data) => {
+        this.setState({
+          text: data[0].phrase, 
+          isJoke: true, 
+          isBusy: false
+        })
+    })
+    .catch(console.log)
   }
 
   fetchJoke() {
@@ -36,27 +48,31 @@ class App extends React.Component {
       }
     })
     .then(result => result.json())
-    .then(
-      (data) => {
-        this.setState( {text: data.joke, isJoke: false, isBusy: false} )
-      }
-    )
+    .then( (data) => {
+        this.setState({
+          text: data.joke, 
+          isJoke: false, 
+          isBusy: false
+        })
+    })
     .catch(console.log)
   }
 
   fetchAffirmation() {
-    this.setState({isBusy:true})
+    this.setState( {isBusy:true} )
     fetch('https://dulce-affirmations-api.herokuapp.com/affirmation', {
       headers: {
         "Accept": "application/json"
       }
     })
     .then(result => result.json())
-    .then(
-      (data) => {
-        this.setState( {text: data[0].phrase , isJoke: true, isBusy: false} )
-      }
-    )
+    .then( (data) => {
+        this.setState({
+          text: data[0].phrase , 
+          isJoke: true, 
+          isBusy: false
+        })
+    })
     .catch(console.log)
   }
 
@@ -76,7 +92,7 @@ class App extends React.Component {
     return (
     <div className="App">
       <header>
-        <p>Affirmation or Joke</p>    
+        <p>Affirmation or Dad Joke</p>    
       </header>
         <div className="text-box">
           {this.state.text}
@@ -85,14 +101,12 @@ class App extends React.Component {
         <NewJokeAffirmation onClick={this.handleClick} />
           <br></br>
       <footer>
-        Rob Watson 2020 
+        Rob Watson 2020 - 2021 
       </footer>
     </div>
     );
   }
 }
-
-
 
 
 export default App;
