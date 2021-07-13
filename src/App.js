@@ -22,9 +22,10 @@ class App extends React.Component {
     this.fetchAffirmation = this.fetchAffirmation.bind(this);
   }
 
-  // On launch, app will display an affirmation from the API:
+  // On launch, app will display a dad joke from the API:
   componentDidMount() {
-    fetch('https://dulce-affirmations-api.herokuapp.com/affirmation', {
+    this.setState( {isBusy:true} )
+    fetch('https://icanhazdadjoke.com/', {
       headers: {
         "Accept": "application/json"
       }
@@ -32,8 +33,8 @@ class App extends React.Component {
     .then(result => result.json())
     .then( (data) => {
         this.setState({
-          text: data[0].phrase, 
-          isJoke: true, 
+          text: data.joke, 
+          isJoke: false, 
           isBusy: false
         })
     })
@@ -41,7 +42,7 @@ class App extends React.Component {
   }
 
   fetchJoke() {
-    this.setState( {isBusy:true}  )
+    this.setState( {isBusy:true} )
     fetch('https://icanhazdadjoke.com/', {
       headers: {
         "Accept": "application/json"
@@ -78,7 +79,7 @@ class App extends React.Component {
 
   handleClick() {
     if(this.state.isBusy){
-      this.setState({text: "*still loading*"});
+      this.setState( {text: "*still loading*"} );
       return
     }
     const isJoke = this.state.isJoke;
